@@ -11,7 +11,7 @@ GPIO.setmode(GPIO.BCM)
 ULTRASONIC_SPEED = 34300  # cm/s
 
 # set GPIO Pins
-GPIO_TRIGGER = 18   # tarts an ultrasonic pulse
+GPIO_TRIGGER = 18   # starts an ultrasonic pulse
 GPIO_ECHO = 24      # receives pulse at the end
 
 # set GPIO direction (IN / OUT)
@@ -46,10 +46,11 @@ def measure_distance():
 
 
 if __name__ == '__main__':
+    print("starting some test measurements with the distance sensor")
     try:
         while True:
             dist = measure_distance()
-            print ("Measured Distance = %.1f cm" % dist)
+            print("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
 
         # Reset by pressing CTRL + C
