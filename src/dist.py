@@ -1,37 +1,41 @@
 #Libraries
 import RPi.GPIO as GPIO
 import time
- 
-#GPIO Mode (BOARD / BCM)
-GPIO.setmode(GPIO.BCM)
+import pigpio
+
  
 #set GPIO Pins
 GPIO_TRIGGER = 18
 GPIO_ECHO = 24
  
-#set GPIO direction (IN / OUT)
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
- 
+pi = pigpio.pi()
+print("connected=", pi.connected)
+
+pi.set_mode(GPIO_TRIGGER, pigpio.OUTPUT)
+pi.set_mode(GPIO_ECHO, pigpio.INPUT)
+
+pi.callback(GPIO_TRIGGER, pigpio.EITHER_EDGE, callback_func)
+pi.callback(GPIO_ECHO, pigpio.EITHER_EDGE, callback_func)
+
+
+def callback_func(gpio, level, tick):
+    pass
+
 def distance():
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
- 
-    # set Trigger after 0.01ms to LOW
-    time.sleep(0.00001)
-    GPIO.output(GPIO_TRIGGER, False)
- 
+    """
+    Send a sound pulse by setting TRIG pin high.  When signal sent, the ECHO pin also goes high until the response
+    is received.  The elapsed round-trip time (RTT) is therefore when the ECHO goes high until it goes low again.
+
+    """
+    # send out a pulse from TRIG
+    pi.gpio_trigger(GPIO_TRIGGER, pulse_len=10, level=1) 
     StartTime = time.time()
+
+    pi.set_watchdog(GPIO_ECHO, wdog_timeout=1000)
     StopTime = time.time()
- 
-    # save StartTime
-    while GPIO.input(GPIO_ECHO) == 0:
-        StartTime = time.time()
- 
-    # save time of arrival
-    while GPIO.input(GPIO_ECHO) == 1:
-        StopTime = time.time()
- 
+
+    print("logged start {} and stop {}".format(StartTime, StopTime))
+
     # time difference between start and arrival
     TimeElapsed = StopTime - StartTime
     # multiply with the sonic speed (34300 cm/s)
@@ -51,3 +55,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Measurement stopped by User")
         GPIO.cleanup()
+        pi.stop()
