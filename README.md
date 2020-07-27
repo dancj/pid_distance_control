@@ -20,14 +20,15 @@ RPi Demo using Python3 that shows a sensor sensing and a motor moving using a Pr
 Just need to run the main python routine
 1. *cd pid_distance_control/*
 1. *source venv/bin/activate*
-1. *python run.py*
+1. *python src/run.py*
 
 ## Hardware
 1. Raspberry Pi (RPi) 1 model B (could use any model)
 1. Ultrasonic distance sensor (HC-SR04)
+    1. This sense transmits a sound wave out of its transitter, then receives the reflected wave in its receiver
 1. Servo motor
 1. Cobbler Pi breakout board
-1. Half size 
+1. Half size breadboard
 1. Jumper wires
 1. Resistors: 330 and 470 Ohm
 
@@ -43,6 +44,7 @@ Just need to run the main python routine
 ## References
 1. [Using a Raspberry Pi distance sensor](https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/)
 1. [Raspberry Pi Servo Motor control](https://tutorials-raspberrypi.com/raspberry-pi-servo-motor-control/)
+1. https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/
 
 ## License
 
