@@ -9,7 +9,7 @@ k_d = 1.0
 k_i = 0.001
 
 
-def run(target_dist):
+def run(target_dist, debug=False):
     """
     Sense distance and drive motor towards a given target
     :param target_dist: distance in cm
@@ -24,7 +24,8 @@ def run(target_dist):
         signal = k_p*err + k_i*sum_err + k_d*(err-last_err)
         control(signal)
         last_err = err
-
+        if debug:
+            print("dist={}, err={}, sum={}, signal={}".format(dist, err, sum_err, signal))
 
 def control(input):
     print("control w/ input ", input)
@@ -32,4 +33,4 @@ def control(input):
 
 if __name__ == "__main__":
     print("starting control loop...")
-    run(target_dist=4.0)
+    run(target_dist=4.0, debug=True)

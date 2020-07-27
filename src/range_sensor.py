@@ -19,12 +19,14 @@ GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 
-def measure_distance():
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
+def measure_distance(debug=False):
 
-    # set Trigger after 0.01ms to LOW
-    time.sleep(0.00001)
+    # send 10microsecond burst on transmitter (TRIG)
+    # send low first for cleaner high pulse
+    GPIO.output(GPIO_TRIGGER, False)
+    time.sleep(0.000005)
+    GPIO.output(GPIO_TRIGGER, True)
+    time.sleep(0.000010)
     GPIO.output(GPIO_TRIGGER, False)
 
     start_time = time.time()
@@ -39,6 +41,7 @@ def measure_distance():
         stop_time = time.time()
 
     # time difference between start and arrival
+    print("stop, start = {}, {}".format(start_time,stop_time)) 
     elapsed = stop_time - start_time
     round_trip_distance = (elapsed * ULTRASONIC_SPEED)
 
