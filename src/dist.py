@@ -23,7 +23,7 @@ class UltrasoundSensor:
 
     def __init__(self):
         self.pi = pigpio.pi()
-        print("connected=", self.pi.connected)
+        print("PI connected=", self.pi.connected)
 
         self.pi.set_mode(GPIO_TRIGGER, pigpio.OUTPUT)
         self.pi.set_mode(GPIO_ECHO, pigpio.INPUT)
@@ -61,6 +61,7 @@ class UltrasoundSensor:
 
     def ping_callback_func(self, gpio, level, tick):
         """
+        Callback in response to TRIG or ECHO pin changing sign
         Set self.time elapsed after a signal change
         :param gpio: pin that changed state
         :param level: 0=low, 1=high, 2=no change
@@ -68,14 +69,16 @@ class UltrasoundSensor:
         """
         if gpio == GPIO_TRIGGER:
             if level == LOW:
-                # trigger just sent
+                # trigger just sent, time to reset everything in preparation of pulse
                 self.triggered = True
                 self.high_time = None
         else:
             if self.triggered:
                 if level == HIGH:
+                    # ECHO went high --> pulse sent
                     self.high_time = tick
                 else:
+                    # ECHO went low --> pulse received
                     if self.high_time is not None:
                         self.time_elapsed = tick - self.high_time
                         self.high_time = None
@@ -87,7 +90,7 @@ if __name__ == '__main__':
     try:
         while True:
             dist = ranger.distance()
-            print ("Measured Distance = %.1f cm" % dist)
+            print("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
  
         # Reset by pressing CTRL + C
