@@ -40,7 +40,7 @@ class UltrasoundSensor:
         """
         Send a sound pulse by setting TRIG pin high.  When signal sent, the ECHO pin also goes high until the response
         is received.  The elapsed round-trip time (RTT) is therefore when the ECHO goes high until it goes low again.
-
+        :return: distance in cm 
         """
         self.ping_received = False
 
@@ -56,7 +56,7 @@ class UltrasoundSensor:
             time.sleep(0.001)
 
         # dist = time * speed
-        round_trip_distance = self.time_elapsed * SPEED_OF_SOUND
+        round_trip_distance = self.time_elapsed * SPEED_OF_SOUND / 1000000.0
         return round_trip_distance / 2
 
     def ping_callback_func(self, gpio, level, tick):
