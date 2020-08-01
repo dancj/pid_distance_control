@@ -15,11 +15,14 @@ RPi Demo using Python3 that shows a sensor sensing and a motor moving using a Pr
     1. *python3 -m venv venv*
     1. *source venv/bin/activate*
     1. *pip install -r requirements.txt*
+1. Uses pigpiod library to communicate with distance sensor, which needs to be installed:
+    1. *sudo apt install pigpiod*
     
 ## Running
 Just need to run the main python routine
 1. *cd pid_distance_control/*
 1. *source venv/bin/activate*
+1. *sudo pigpiod*
 1. *python src/run.py*
 
 ## Hardware
@@ -44,7 +47,8 @@ Just need to run the main python routine
 ## References
 1. [Using a Raspberry Pi distance sensor](https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/)
 1. [Raspberry Pi Servo Motor control](https://tutorials-raspberrypi.com/raspberry-pi-servo-motor-control/)
-1. https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/
+1. [Ultrasonic sensor tutorial](https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/)
+1. [Sonar Ranger pigpio example](http://abyz.me.uk/rpi/pigpio/examples.html#Python%20code)
 
 ## License
 
