@@ -18,6 +18,16 @@ RPi Demo using Python3 that shows a sensor sensing and a motor moving using a Pr
 1. Uses pigpiod library to communicate with distance sensor, which needs to be installed:
     1. *sudo apt install pigpiod*
     
+## Getting Started - Docker Edition
+1. Flash Raspbian lite to SD card, current version is Raspbian Buster
+1. Add empty file named "ssh" to root directory of SD card, to enable ssh
+1. Insert card into RPi and boot up for the first time
+1. Use another computer to SSH into RPi, *ssh pi@192.168.1.[rpi_ip]*. Default password is *raspberry* and it's always a good idea to change that right away with *passwd* command
+1. Update things with **sudo apt update && sudo apt upgrade*
+1. Install Docker: *curl -sSL https://get.docker.com | sh*
+1. Update user permissions: *sudo usermod -aG docker pi*
+1. Run this project's container (TBD): *docker run armhf/hello-world*
+    
 ## Running
 Just need to run the main python routine
 1. *cd pid_distance_control/*
@@ -26,7 +36,8 @@ Just need to run the main python routine
 1. *python src/run.py*
 
 ## Hardware
-1. Raspberry Pi (RPi) 1 model B (could use any model)
+1. Raspberry Pi (RPi) 1 model B (could use any model, this is just the one I had available)
+    1. Use *cat /proc/cpuinfo | grep model* to show processor version. This indicates which Docker base image is needed
 1. Ultrasonic distance sensor (HC-SR04)
     1. This sense transmits a sound wave out of its transitter, then receives the reflected wave in its receiver
 1. Servo motor
