@@ -53,7 +53,7 @@ class UltrasoundSensor:
             if (time.time() - start_time) > 5.0:
                 print("Ping not received... timed out")
                 return -1
-            time.sleep(0.001)
+            time.sleep(0.01)
 
         # dist = time * speed
         round_trip_distance = self.time_elapsed * SPEED_OF_SOUND / 1000000.0
